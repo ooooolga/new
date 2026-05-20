@@ -5,7 +5,7 @@
 const APP_CONFIG = {
   brandName: '事事如嗦',
   agentName: '嗦语',
-  crisisHotline: '400-161-9995',
+  crisisHotline: '12356',
   api: {
     health: '/api/health',
     chat: '/api/chat',
