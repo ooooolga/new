@@ -416,7 +416,7 @@ async function sendMessage(text) {
     document.getElementById('streaming-reply')?.remove();
     appendMessage(
       'assistant',
-      `⚠️ ${err.message}\n\n请确认已双击「启动.bat」运行服务，并检查 .env 中的 COZE_API_TOKEN 与 COZE_BOT_ID。`,
+      `⚠️ ${err.message}\n\n免费token用完了<(＿　＿)>。`,
     );
   } finally {
     setSending(false);
