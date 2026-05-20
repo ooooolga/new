@@ -9,53 +9,7 @@ const WELCOME_MESSAGE = {
     '嘿，我是嗦语。那些堵在心里的「硬面条」，交给我，我陪你一起把它们嗦掉。',
 };
 
-const MOCK_HISTORY = [
-  {
-    id: 'mock-1',
-    title: '深夜的焦虑面',
-    preview: '最近总是感到焦虑…',
-    time: '今天 14:20',
-    messages: [
-      { role: 'assistant', content: WELCOME_MESSAGE.content },
-      { role: 'user', content: '最近总是感到焦虑，晚上也睡不好。' },
-      {
-        role: 'assistant',
-        content:
-          '谢谢你愿意说出来。焦虑和睡眠往往互相影响，你能觉察到它们，已经是很重要的一步。\n\n我们可以先慢一点：最近有没有某个具体时刻，焦虑特别明显？',
-      },
-    ],
-  },
-  {
-    id: 'mock-2',
-    title: '睡不着的夜面',
-    preview: '躺下后脑子停不下来…',
-    time: '昨天 22:05',
-    messages: [
-      { role: 'assistant', content: '夜深了，如果睡不着，也可以来这里坐坐。嗦语在听。' },
-      { role: 'user', content: '躺下后脑子停不下来，越想越清醒。' },
-      {
-        role: 'assistant',
-        content:
-          '这种「停不下来的思绪」很常见。我们不急着赶走它们。\n\n试试把呼吸放慢：吸气 4 秒，呼气 6 秒。做完三次后，告诉我身体有没有稍微松一点？',
-      },
-    ],
-  },
-  {
-    id: 'mock-3',
-    title: '工作压力面',
-    preview: '项目 deadline 很紧…',
-    time: '周一 09:15',
-    messages: [
-      { role: 'assistant', content: '工作日的早晨，辛苦了。想聊聊工作上的压力吗？' },
-      { role: 'user', content: '项目 deadline 很紧，总觉得做不好会被批评。' },
-      {
-        role: 'assistant',
-        content:
-          '在高压下担心被评价，说明你很在乎自己的表现。\n\n如果把压力从 0 到 10 打分，现在是几分？我们可以一起看看，哪一部分是可以先放一放的。',
-      },
-    ],
-  },
-];
+const MOCK_HISTORY = [];
 
 const state = {
   sessions: [],
