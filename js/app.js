@@ -6,7 +6,7 @@
 const WELCOME_MESSAGE = {
   role: 'assistant',
   content:
-    '嘿，我是嗦语。那些堵在心里的「硬面条」，交给我，我陪你一起把它们嗦掉。',
+    '欢迎来到事事如嗦——我是嗦语，把那些堵在心里的‘硬面条’交给我，让我们像嗦面一样，把那些烦心事儿都嗦走啦！',
 };
 
 const MOCK_HISTORY = [];
