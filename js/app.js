@@ -162,18 +162,74 @@ function appendMessage(role, content) {
 const MIN_NOODLE_MS = 1200;
 let noodleShownAt = 0;
 
-/** AI 思考中：拉面拉长 → 折叠 → 拉长 循环动画 */
+/** AI 思考中循环动画 */
 const NOODLE_THINKING_HTML = `
   <div class="noodle-thinking bg-white border border-oatDeep/50 rounded-[1.25rem] rounded-bl-md px-5 py-3 shadow-card">
     <div class="noodle-stage" role="status" aria-label="嗦语思考中">
-      <span class="noodle-chopstick left" aria-hidden="true"></span>
-      <span class="noodle-chopstick right" aria-hidden="true"></span>
-      <div class="noodle-strands" aria-hidden="true">
-        <span class="noodle-strand s1"></span>
-        <span class="noodle-strand s2"></span>
-        <span class="noodle-strand s3"></span>
-      </div>
-      <div class="noodle-bowl" aria-hidden="true"></div>
+      <svg viewBox="0 0 200 175" width="160" height="140" xmlns="http://www.w3.org/2000/svg" style="display: block; overflow: visible;">
+        <g stroke="#C9B89A" stroke-width="1.3" stroke-linecap="round" fill="none" opacity="0.55">
+          <path d="M 118 50 Q 114 42 118 34 Q 122 26 118 18">
+            <animate attributeName="opacity" values="0;0.65;0" dur="2.6s" repeatCount="indefinite"/>
+            <animateTransform attributeName="transform" type="translate" values="0,8; 0,-4" dur="2.6s" repeatCount="indefinite"/>
+          </path>
+          <path d="M 128 54 Q 124 46 128 38 Q 132 30 128 22">
+            <animate attributeName="opacity" values="0;0.55;0" dur="2.6s" begin="0.6s" repeatCount="indefinite"/>
+            <animateTransform attributeName="transform" type="translate" values="0,8; 0,-4" dur="2.6s" begin="0.6s" repeatCount="indefinite"/>
+          </path>
+          <path d="M 138 52 Q 134 44 138 36 Q 142 28 138 20">
+            <animate attributeName="opacity" values="0;0.6;0" dur="2.6s" begin="1.2s" repeatCount="indefinite"/>
+            <animateTransform attributeName="transform" type="translate" values="0,8; 0,-4" dur="2.6s" begin="1.2s" repeatCount="indefinite"/>
+          </path>
+        </g>
+        <g>
+          <animateTransform attributeName="transform" type="translate" values="0,0; 0,-6; 0,0; 0,-6; 0,0" dur="3.4s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1; 0.4 0 0.6 1; 0.4 0 0.6 1; 0.4 0 0.6 1"/>
+          <g transform="translate(122, 112)">
+            <g stroke="#E0B870" stroke-width="1.6" stroke-linecap="round" fill="none" opacity="0.92">
+              <path d="M -7 0 Q -9 14 -5 28 Q -3 42 -7 56"/>
+              <path d="M -3 0 Q -5 14 -1 28 Q 1 44 -3 58"/>
+              <path d="M 1 0 Q 3 14 -1 28 Q -3 44 1 58"/>
+              <path d="M 5 0 Q 3 16 7 30 Q 9 44 5 58"/>
+              <path d="M 9 0 Q 11 14 7 28 Q 5 42 9 56"/>
+              <path d="M -5 0 Q -6 10 -3 18" opacity="0.7"/>
+              <path d="M 7 0 Q 8 12 5 22" opacity="0.7"/>
+            </g>
+            <g stroke="#F5DAA0" stroke-width="0.8" stroke-linecap="round" fill="none" opacity="0.85">
+              <path d="M -5 2 Q -7 16 -3 30"/>
+              <path d="M 1 2 Q -1 16 3 30"/>
+              <path d="M 6 2 Q 8 16 5 30"/>
+            </g>
+          </g>
+          <g transform="rotate(30, 100, 95)">
+            <g>
+              <rect x="40" y="85" width="120" height="4" rx="1.5" fill="#A37846"/>
+              <rect x="40" y="85" width="120" height="1.2" rx="0.5" fill="#C9925A" opacity="0.8"/>
+            </g>
+            <g>
+              <rect x="42" y="93" width="120" height="4" rx="1.5" fill="#B88654"/>
+              <rect x="42" y="93" width="120" height="1.2" rx="0.5" fill="#D9A370" opacity="0.8"/>
+            </g>
+          </g>
+          <g transform="translate(130, 120)">
+            <g stroke="#D9AB68" stroke-width="1.6" stroke-linecap="round" fill="none" opacity="0.98">
+              <path d="M -8 0 Q -10 12 -6 24 Q -4 36 -8 48"/>
+              <path d="M -4 0 Q -6 12 -2 24 Q 0 38 -4 50"/>
+              <path d="M 0 0 Q 2 12 -2 24 Q -4 38 0 50"/>
+              <path d="M 4 0 Q 2 14 6 26 Q 8 38 4 50"/>
+              <path d="M 8 0 Q 10 12 6 24 Q 4 36 8 48"/>
+              <path d="M 12 0 Q 10 14 14 26 Q 16 36 12 46"/>
+              <path d="M -6 0 Q -7 10 -4 16" opacity="0.7"/>
+              <path d="M 10 0 Q 11 12 8 20" opacity="0.7"/>
+              <path d="M 6 0 Q 8 10 5 18" opacity="0.6"/>
+            </g>
+            <g stroke="#F5DAA0" stroke-width="0.8" stroke-linecap="round" fill="none" opacity="0.85">
+              <path d="M -6 2 Q -8 14 -4 26"/>
+              <path d="M 0 2 Q -2 14 2 26"/>
+              <path d="M 5 2 Q 7 14 4 26"/>
+              <path d="M 10 2 Q 8 12 12 24"/>
+            </g>
+          </g>
+        </g>
+      </svg>
     </div>
     <p class="noodle-hint text-[11px] text-mist mt-2 text-center tracking-wide">嗦语正在嗦面…</p>
   </div>
