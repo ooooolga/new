@@ -7,7 +7,7 @@ export default async function handler(req, res) {
     const { message, conversationId, sessionId, turnNumber } = req.body;
 
     const response = await fetch(
-      'https://api.coze.com/open_api/v2/chat',
+      'https://api.coze.cn/open_api/v2/chat',
       {
         method: 'POST',
         headers: {
