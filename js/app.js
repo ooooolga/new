@@ -32,6 +32,31 @@ function getOrCreateSessionId() {
   }
   return id;
 }
+
+function saveSessionsToStorage() {
+  try {
+    const data = {
+      sessions: state.sessions,
+      activeId: state.activeId,
+      conversationId: state.conversationId,
+    };
+    localStorage.setItem('suoyu_chat_history', JSON.stringify(data));
+  } catch (e) {
+    console.error('Save history failed:', e);
+  }
+}
+
+function loadSessionsFromStorage() {
+  try {
+    const raw = localStorage.getItem('suoyu_chat_history');
+    if (!raw) return null;
+    const data = JSON.parse(raw);
+    return data;
+  } catch (e) {
+    console.error('Load history failed:', e);
+    return null;
+  }
+}
 function uid() {
   return `session-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 }
@@ -166,6 +191,7 @@ function appendMessage(role, content) {
   renderMessages();
   renderHistory();
   updateHeader();
+  saveSessionsToStorage();
 }
 
 const MIN_NOODLE_MS = 1200;
@@ -505,16 +531,56 @@ function bindNewChatButtons() {
 }
 
 function init() {
-  MOCK_HISTORY.forEach((item) => {
-    state.sessions.push({
-      id: item.id,
-      title: item.title,
-      preview: item.preview,
-      time: item.time,
-      messages: [...item.messages],
-      conversationId: null,
+  // 优先从本地恢复对话
+  const saved = loadSessionsFromStorage();
+  
+  if (saved && saved.sessions && saved.sessions.length > 0) {
+    // 有本地记录，恢复
+    state.sessions = saved.sessions;
+    state.activeId = saved.activeId || saved.sessions[0].id;
+    state.conversationId = saved.conversationId || null;
+  } else {
+    // 没有本地记录，加载示例对话
+    MOCK_HISTORY.forEach((item) => {
+      state.sessions.push({
+        id: item.id,
+        title: item.title,
+        preview: item.preview,
+        time: item.time,
+        messages: [...item.messages],
+        conversationId: null,
+      });
     });
+    state.activeId = state.sessions[0]?.id || null;
+    if (!state.activeId) createSession();
+  }
+
+  renderHistory();
+  renderMessages();
+  updateHeader();
+  checkHealth();
+  bindNewChatButtons();
+
+  const input = document.getElementById('message-input');
+  input.addEventListener('input', () => autoResizeTextarea(input));
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      document.getElementById('chat-form').requestSubmit();
+    }
   });
+
+  document.getElementById('chat-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (state.isSending) return;
+    const text = input.value.trim();
+    if (!text) return;
+    input.value = '';
+    autoResizeTextarea(input);
+    appendMessage('user', text);
+    await sendMessage(text);
+  });
+}
 
   state.activeId = state.sessions[0]?.id || null;
   if (!state.activeId) createSession();
