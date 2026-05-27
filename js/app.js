@@ -19,10 +19,19 @@ const state = {
   cozeConfigured: false,
   demoMode: true,
   offlineOnly: false,
+  sessionId: getOrCreateSessionId(),
 };
 
 const API = typeof APP_CONFIG !== 'undefined' ? APP_CONFIG.api : { health: '/api/health', chat: '/api/chat' };
 
+function getOrCreateSessionId() {
+  let id = localStorage.getItem('suoyu_session_id');
+  if (!id) {
+    id = `s-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+    localStorage.setItem('suoyu_session_id', id);
+  }
+  return id;
+}
 function uid() {
   return `session-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 }
@@ -381,12 +390,17 @@ async function sendMessage(text) {
   let streamStarted = false;
 
   try {
+    const session = getActiveSession();
+    const turnNumber = session?.messages?.filter(m => m.role === 'user').length || 1;
+
     const res = await fetch(API.chat, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         message: text,
         conversationId: state.conversationId,
+        sessionId: state.sessionId,
+        turnNumber: turnNumber,
       }),
     });
 
