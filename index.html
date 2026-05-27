@@ -234,4 +234,293 @@
   <script src="js/config.js"></script>
   <script src="js/app.js?v=5"></script>
 </body>
+  <!-- ⭐ Opt-in 分流页 -->
+<div id="optin-screen" style="
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: linear-gradient(135deg, #FBF7EF 0%, #F5E8C8 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  overflow-y: auto;
+">
+  <div style="max-width: 760px; width: 100%; text-align: center;">
+    
+    <!-- Logo / 标题 -->
+    <div style="margin-bottom: 12px; font-size: 32px;">🍜</div>
+    <h1 style="
+      font-size: 28px;
+      color: #6B5A3E;
+      margin: 0 0 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+    ">欢迎来到嗦语</h1>
+    <p style="
+      font-size: 15px;
+      color: #A89B7E;
+      margin: 0 0 36px;
+      line-height: 1.7;
+    ">
+      今天，你希望以什么方式被陪伴？<br/>
+      <span style="font-size: 13px; color: #C9B89A;">你可以自由选择，也可以随时切换。</span>
+    </p>
+    
+    <!-- 三个选项卡 -->
+    <div style="
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    ">
+      
+      <!-- 选项1：AI -->
+      <button id="optin-ai" style="
+        background: white;
+        border: 2px solid #E8DFC8;
+        border-radius: 20px;
+        padding: 28px 20px;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-align: left;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        font-family: inherit;
+      " onmouseover="this.style.borderColor='#D9B574';this.style.transform='translateY(-2px)'" 
+         onmouseout="this.style.borderColor='#E8DFC8';this.style.transform='translateY(0)'">
+        <div style="font-size: 28px; margin-bottom: 12px;">🍜</div>
+        <div style="font-size: 16px; color: #6B5A3E; font-weight: 600; margin-bottom: 8px;">
+          和嗦语 AI 聊聊
+        </div>
+        <div style="font-size: 12px; color: #A89B7E; line-height: 1.6;">
+          立即开始 · 无需等待<br/>
+          适合：日常情绪疏导、深夜倾诉
+        </div>
+      </button>
+      
+      <!-- 选项2：人工 -->
+      <button id="optin-human" style="
+        background: white;
+        border: 2px solid #E8DFC8;
+        border-radius: 20px;
+        padding: 28px 20px;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-align: left;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        font-family: inherit;
+      " onmouseover="this.style.borderColor='#D9B574';this.style.transform='translateY(-2px)'" 
+         onmouseout="this.style.borderColor='#E8DFC8';this.style.transform='translateY(0)'">
+        <div style="font-size: 28px; margin-bottom: 12px;">👤</div>
+        <div style="font-size: 16px; color: #6B5A3E; font-weight: 600; margin-bottom: 8px;">
+          等待人工咨询
+        </div>
+        <div style="font-size: 12px; color: #A89B7E; line-height: 1.6;">
+          预约接听 · 工作日 9:00-21:00<br/>
+          适合：复杂情绪、需要专业判断
+        </div>
+      </button>
+      
+      <!-- 选项3：自助 -->
+      <button id="optin-selfhelp" style="
+        background: white;
+        border: 2px solid #E8DFC8;
+        border-radius: 20px;
+        padding: 28px 20px;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-align: left;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        font-family: inherit;
+      " onmouseover="this.style.borderColor='#D9B574';this.style.transform='translateY(-2px)'" 
+         onmouseout="this.style.borderColor='#E8DFC8';this.style.transform='translateY(0)'">
+        <div style="font-size: 28px; margin-bottom: 12px;">📚</div>
+        <div style="font-size: 16px; color: #6B5A3E; font-weight: 600; margin-bottom: 8px;">
+          先看自助资源
+        </div>
+        <div style="font-size: 12px; color: #A89B7E; line-height: 1.6;">
+          静态浏览 · 即看即得<br/>
+          适合：想先了解、不想说话
+        </div>
+      </button>
+      
+    </div>
+    
+    <!-- 免责声明 + 危机热线 -->
+    <div style="
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid #E8DFC8;
+      border-radius: 12px;
+      padding: 14px 18px;
+      font-size: 12px;
+      color: #8B7355;
+      line-height: 1.7;
+    ">
+      <p style="margin: 0 0 6px;">
+        ⚠️ <strong>嗦语不能替代专业心理咨询或医疗诊断</strong>
+      </p>
+      <p style="margin: 0;">
+        如遇紧急情况，请立即拨打 
+        <a href="tel:400-161-9995" style="color: #B88654; font-weight: 600; text-decoration: none;">
+          全国心理援助热线 400-161-9995
+        </a>
+        （24小时）
+      </p>
+    </div>
+    
+    <!-- 数据告知 -->
+    <p style="
+      margin: 20px 0 0;
+      font-size: 11px;
+      color: #C9B89A;
+      line-height: 1.6;
+    ">
+      继续使用即表示同意：嗦语会匿名记录对话用于产品优化，<br/>
+      不收集姓名、IP等任何身份信息。
+    </p>
+    
+  </div>
+</div>
+
+<!-- ⭐ 人工咨询·预约页 -->
+<div id="human-screen" style="
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: linear-gradient(135deg, #FBF7EF 0%, #F5E8C8 100%);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+">
+  <div style="max-width: 500px; width: 100%; text-align: center;">
+    <div style="font-size: 40px; margin-bottom: 16px;">👤</div>
+    <h2 style="color: #6B5A3E; margin: 0 0 12px;">人工咨询·预约</h2>
+    <p style="color: #A89B7E; line-height: 1.7; margin: 0 0 24px;">
+      抱歉，当前阶段我们的人工咨询师还在筹备中。<br/>
+      如需立即获得专业帮助，请：
+    </p>
+    <div style="
+      background: white;
+      border: 1px solid #E8DFC8;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 24px;
+      text-align: left;
+    ">
+      <p style="margin: 0 0 8px; color: #6B5A3E; font-weight: 600;">📞 推荐联系：</p>
+      <p style="margin: 6px 0; color: #8B7355; font-size: 14px;">
+        全国心理援助热线：<a href="tel:400-161-9995" style="color: #B88654;">400-161-9995</a>
+      </p>
+      <p style="margin: 6px 0; color: #8B7355; font-size: 14px;">
+        北京心理危机干预中心：<a href="tel:010-82951332" style="color: #B88654;">010-82951332</a>
+      </p>
+      <p style="margin: 6px 0; color: #8B7355; font-size: 14px;">
+        希望24热线：<a href="tel:400-161-9995" style="color: #B88654;">400-161-9995</a>
+      </p>
+    </div>
+    <button onclick="document.getElementById('human-screen').style.display='none';document.getElementById('optin-screen').style.display='flex'" style="
+      background: transparent;
+      border: 1px solid #C9B89A;
+      color: #8B7355;
+      padding: 10px 24px;
+      border-radius: 24px;
+      cursor: pointer;
+      font-size: 14px;
+      font-family: inherit;
+    ">← 返回</button>
+  </div>
+</div>
+
+<!-- ⭐ 自助资源页 -->
+<div id="selfhelp-screen" style="
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: linear-gradient(135deg, #FBF7EF 0%, #F5E8C8 100%);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  overflow-y: auto;
+">
+  <div style="max-width: 600px; width: 100%;">
+    <div style="text-align: center;">
+      <div style="font-size: 40px; margin-bottom: 16px;">📚</div>
+      <h2 style="color: #6B5A3E; margin: 0 0 12px;">自助资源</h2>
+      <p style="color: #A89B7E; margin: 0 0 24px;">慢慢看，不着急。</p>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      
+      <div style="background: white; border: 1px solid #E8DFC8; border-radius: 16px; padding: 18px;">
+        <h3 style="margin: 0 0 8px; color: #6B5A3E; font-size: 15px;">🌙 失眠了，可以试试…</h3>
+        <p style="margin: 0; color: #8B7355; font-size: 13px; line-height: 1.7;">
+          躺下后脑子停不下来时，试试"4-7-8呼吸法"：<br/>
+          吸气4秒 → 屏住7秒 → 呼气8秒。重复3-4次。
+        </p>
+      </div>
+      
+      <div style="background: white; border: 1px solid #E8DFC8; border-radius: 16px; padding: 18px;">
+        <h3 style="margin: 0 0 8px; color: #6B5A3E; font-size: 15px;">😟 焦虑发作时…</h3>
+        <p style="margin: 0; color: #8B7355; font-size: 13px; line-height: 1.7;">
+          试试"5-4-3-2-1"感官练习：<br/>
+          说出你看到的5样东西、听到的4种声音、能摸到的3样物品、闻到的2种气味、尝到的1种味道。
+        </p>
+      </div>
+      
+      <div style="background: white; border: 1px solid #E8DFC8; border-radius: 16px; padding: 18px;">
+        <h3 style="margin: 0 0 8px; color: #6B5A3E; font-size: 15px;">💭 自我怀疑时…</h3>
+        <p style="margin: 0; color: #8B7355; font-size: 13px; line-height: 1.7;">
+          把脑子里的负面想法写下来。<br/>
+          然后问自己：如果是朋友跟我说这句话，我会怎么回应TA？
+        </p>
+      </div>
+      
+      <div style="background: #FDF4E5; border: 1px solid #E8C97A; border-radius: 16px; padding: 18px;">
+        <h3 style="margin: 0 0 8px; color: #8B6F47; font-size: 15px;">🆘 如果情况紧急…</h3>
+        <p style="margin: 0; color: #8B7355; font-size: 13px; line-height: 1.7;">
+          请立即拨打：<br/>
+          <a href="tel:400-161-9995" style="color: #B88654; font-weight: 600;">400-161-9995（全国心理援助热线·24小时）</a>
+        </p>
+      </div>
+      
+    </div>
+    
+    <div style="text-align: center; margin-top: 24px;">
+      <button onclick="document.getElementById('selfhelp-screen').style.display='none';document.getElementById('optin-screen').style.display='flex'" style="
+        background: transparent;
+        border: 1px solid #C9B89A;
+        color: #8B7355;
+        padding: 10px 24px;
+        border-radius: 24px;
+        cursor: pointer;
+        font-size: 14px;
+        font-family: inherit;
+      ">← 返回</button>
+    </div>
+  </div>
+</div>
+
+<!-- ⭐ 控制脚本 -->
+<script>
+  // 选"和AI聊"：关掉分流页，显示聊天界面
+  document.getElementById('optin-ai').addEventListener('click', () => {
+    document.getElementById('optin-screen').style.display = 'none';
+  });
+  
+  // 选"人工咨询"
+  document.getElementById('optin-human').addEventListener('click', () => {
+    document.getElementById('optin-screen').style.display = 'none';
+    document.getElementById('human-screen').style.display = 'flex';
+  });
+  
+  // 选"自助资源"
+  document.getElementById('optin-selfhelp').addEventListener('click', () => {
+    document.getElementById('optin-screen').style.display = 'none';
+    document.getElementById('selfhelp-screen').style.display = 'flex';
+  });
+</script>
 </html>
