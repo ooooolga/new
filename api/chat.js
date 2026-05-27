@@ -3,6 +3,8 @@ import { neon } from '@neondatabase/serverless';
 const sql = neon(process.env.DATABASE_URL);
 
 export default async function handler(req, res) {
+  const startTime = Date.now();
+  
   try {
     const { message, conversationId, sessionId, turnNumber } = req.body;
 
@@ -38,15 +40,32 @@ export default async function handler(req, res) {
       data.messages?.find((m) => m.type === 'answer')?.content ||
       '嗦语暂时没接上，请稍后再试。';
 
-    // 把对话存进数据库
+    // 计算指标
+    const responseTimeMs = Date.now() - startTime;
+    const userMessageLength = message ? message.length : 0;
+    const aiReplyLength = reply ? reply.length : 0;
+
+    // 写入数据库
     try {
       await sql`
-        INSERT INTO conversations (session_id, conversation_id, turn_number, user_message, ai_reply)
-        VALUES (${sessionId || null}, ${data.conversation_id || conversationId || null}, ${turnNumber || null}, ${message}, ${reply})
+        INSERT INTO conversations (
+          session_id, conversation_id, turn_number,
+          user_message, ai_reply,
+          user_message_length, ai_reply_length, response_time_ms
+        )
+        VALUES (
+          ${sessionId || null},
+          ${data.conversation_id || conversationId || null},
+          ${turnNumber || null},
+          ${message},
+          ${reply},
+          ${userMessageLength},
+          ${aiReplyLength},
+          ${responseTimeMs}
+        )
       `;
     } catch (dbErr) {
       console.error('DB insert error:', dbErr);
-      // 数据库出错不影响用户体验，继续返回回复
     }
 
     res.setHeader('Content-Type', 'text/event-stream');
