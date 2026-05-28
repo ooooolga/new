@@ -582,34 +582,4 @@ function init() {
   });
 }
 
-  state.activeId = state.sessions[0]?.id || null;
-  if (!state.activeId) createSession();
-
-  renderHistory();
-  renderMessages();
-  updateHeader();
-  checkHealth();
-  bindNewChatButtons();
-
-  const input = document.getElementById('message-input');
-  input.addEventListener('input', () => autoResizeTextarea(input));
-  input.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      document.getElementById('chat-form').requestSubmit();
-    }
-  });
-
-  document.getElementById('chat-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    if (state.isSending) return;
-    const text = input.value.trim();
-    if (!text) return;
-    input.value = '';
-    autoResizeTextarea(input);
-    appendMessage('user', text);
-    await sendMessage(text);
-  });
-}
-
 document.addEventListener('DOMContentLoaded', init);
